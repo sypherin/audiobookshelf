@@ -690,7 +690,9 @@ function cleanAuthorForCompares(author) {
   let cleanAuthor = replaceAccentedChars(author).toLowerCase()
   // separate initials
   cleanAuthor = cleanAuthor.replace(/([a-z])\.([a-z])/g, '$1. $2')
-  // remove middle initials
+  // normalize spacing between initials (e.g., "j. n." → "j.n.")
+  cleanAuthor = cleanAuthor.replace(/([a-z]\.)\s+([a-z]\.)/g, '$1$2')
+  // remove middle initials (now that initials are normalized without spaces)
   cleanAuthor = cleanAuthor.replace(/(?<=\w\w)(\s+[a-z]\.?)+(?=\s+\w\w)/g, '')
   // remove et al.
   cleanAuthor = cleanAuthor.replace(/ et al\.?(?= |$)/g, '')
